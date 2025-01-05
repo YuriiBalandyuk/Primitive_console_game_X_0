@@ -1,4 +1,4 @@
-from random import vonmisesvariate
+from random import randrange
 
 """
 Сценарій програми
@@ -77,15 +77,82 @@ def enter_move(board):
 #
 #
 
-# def winner_for(board, sign):
-#
-#     # Функція аналізує стан дошки, щоб перевірити, чи
-#     # э в грі переможець
+def winner_for(board):
+
+    count_0 = 0
+    count_X = 0
+    for i in range(len(board)):
+        for j in range(len(board[i])):
+            if board[i][j] == "0":
+                count_0 += 1
+                if count_0 == 3:
+                    return "Гравець виграв"
+            elif board[i][j] == "X":
+                count_X += 1
+                if count_X == 3:
+                    return "Комп'ютер виграв"
+        count_0 = 0
+        count_X = 0
+
+    for count_column in range(len(board[0])):  # Ітерація по колонках
+        for i in range(len(board)):  # Ітерація по рядках
+            if board[i][count_column] == "0":
+                count_0 += 1
+                if count_0 == 3:
+                    return "Гравець виграв"
+            elif board[i][count_column] == "X":
+                count_X += 1
+                if count_X == 3:
+                    return "Комп'ютер виграв"
+        count_0 = 0
+        count_X = 0
+
+    for i in range(len(board)):
+        if board[i][i] == "0":
+            count_0 += 1
+            if count_0 == 3:
+                 return "Гравець виграв"
+        elif board[i][i] == "X":
+            count_X += 1
+            if count_X == 3:
+                return "Комп'ютер виграв"
+        count_0 = 0
+        count_X = 0
+
+    count_column = 2
+    for i in range(len(board)):
+        if board[i][count_column] == "0":
+            count_0 += 1
+            if count_0 == 3:
+                return "Гравець виграв"
+            count_column -= 1
+        elif board[i][count_column] == "X":
+            count_X += 1
+            if count_X == 3:
+                return "Комп'ютер виграв"
+            count_column -= 1
+        elif board[i][count_column] != "0" or board[i][count_column] != "X":
+            count_column -= 1
+        count_0 = 0
+        count_X = 0
+
+    # Функція аналізує стан дошки, щоб перевірити, чи
+    # э в грі переможець
 
 
 
-# def draw_move(board):
-#     # Функція малює хід комп'ютера та оновлює дошку.
+def draw_move(board):
+
+    while True:
+        number = randrange(1,10)
+
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                if number == board[i][j]:
+                    board[i][j] = "X"
+                    return board
+
+    # Функція малює хід комп'ютера та оновлює дошку.
 
 while True:
 
@@ -99,10 +166,6 @@ while True:
             row.append(j)
         board.append(row)
 
-    print("\nПочатковий вигляд сітки для гри\n")
-
-    display_view_board()
-
     choose_status = " "
     while True:
         print("\nДавайте зіграємо в гру. Для початку гри введіть 'Yes'. Для виходу з програми введіть 'No'.")
@@ -113,17 +176,35 @@ while True:
         elif choose_status == "No":
             break
 
+    print("\nПочатковий вигляд сітки для гри\n")
+    display_view_board()
     print("\nПерший хід за комп'ютером\n")
 
     modify_border = []
     while True:
         modify_border = display_board(board)
+        status_game = winner_for(modify_border)
+        if status_game == "Гравець виграв":
+            print("Гравець виграв")
+            break
+        elif status_game == "Комп'ютер виграв":
+            print("Комп'ютер виграв")
+            break
         modify_border = enter_move(modify_border)
-        # winner_for(modify_border)
+        status_game = winner_for(modify_border)
+        if status_game == "Гравець виграв":
+            print("Гравець виграв")
+            break
+        elif status_game == "Комп'ютер виграв":
+            print("Комп'ютер виграв")
+            break
+        modify_border = draw_move(modify_border)
+        if status_game == "Гравець виграв":
+            print("Гравець виграв")
+            break
+        elif status_game == "Комп'ютер виграв":
+            print("Комп'ютер виграв")
+            break
 
 
-
-
-    if choose_status == "No":
-        break
 
