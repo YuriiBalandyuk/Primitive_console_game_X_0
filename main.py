@@ -83,7 +83,7 @@ def victory_for(board,sgn):
         who = None
     cross1 = cross2 = True
     for rc in range(3):
-        if board[rc][0] == sgn and board[rc][1] == sgn and board[rc][2] == sgn: #
+        if board[rc][0] == sgn and board[rc][1] == sgn and board[rc][2] == sgn:
             return who
         if board[0][rc] == sgn and board[1][rc] == sgn and board[2][rc] == sgn:
             return who
@@ -106,7 +106,7 @@ def draw_move(board):
 
 
 board = [ [3 * j + i + 1 for i in range(3)] for j in range(3) ]
-board[1][1] = 'X' #
+board[1][1] = 'X'
 free = make_list_of_free_fields(board)
 human_turn = True
 while len(free):
